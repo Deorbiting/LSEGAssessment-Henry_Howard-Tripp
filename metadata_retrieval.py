@@ -32,8 +32,20 @@ def get_metadata(token, key=None):
         response.raise_for_status()
         #Splits the retrieved metadata into seperate items
         metadata = response.text.splitlines()
-        #Each metadataitem is retrieved and stored in a dictionary
-        metadata_dict = {item: requests.get(f"{METADATA_URL}{item}", headers={"x-aws-ec2-metadata-token": token}).text for item in metadata}
+
+        #Define dictionary to store metadata
+        metadata_dict = {}
+        #Starts session
+        with requests.Session() as session:
+            #Adds the specified token to the header
+            session.headers.update({"x-aws-ec2-metadata-token": token})
+            for item in metadata:
+                #Uses a GET request to retrieve the metadata
+                item_response =session.get(f"{METADATA_URL}{item}", timeout=1)
+                item_response.raise_for_status()
+                metadata_dict[item] = item_response.text
+
+                #Improved version reuses the connection for multiple requests, improving performance
 
         #If a particular data key is specified for retrieval, only requested key is returned
         if key:

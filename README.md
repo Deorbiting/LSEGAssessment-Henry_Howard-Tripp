@@ -55,3 +55,6 @@ Run the script with a specified datakey Example: "instance-id" in JSON format:
 When a user inputs an invalid data key to be retrieved Example: "instance":
 
 ![alt text](https://github.com/Deorbiting/LSEGAssessment/blob/main/Failed%20Key.png)
+
+
+Author: Henry Howard-Tripp 30/01/2025

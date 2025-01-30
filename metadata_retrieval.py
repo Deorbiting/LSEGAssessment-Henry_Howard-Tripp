@@ -40,8 +40,7 @@ def get_metadata(token, key=None):
             #Adds the specified token to the header
             session.headers.update({"x-aws-ec2-metadata-token": token})
             for item in metadata:
-                #Uses a GET request to retrieve the metadata
-                item_response =session.get(f"{METADATA_URL}{item}", timeout=1)
+                item_response =session.get(f"{METADATA_URL}{item}", timeout=1)# Connection reused
                 item_response.raise_for_status()
                 metadata_dict[item] = item_response.text
 
